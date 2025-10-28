@@ -1,0 +1,14 @@
+Open Chrome → Right-click → Inspect → Console → Paste:
+
+const trigger = "chickbanana";
+function checkVuln(text) {
+  if(text.includes(trigger)) {
+    console.log("⛔ MEMORY CORRUPTION DETECTED");
+  } else {
+    console.log("✅ System secure");
+  }
+}
+checkVuln(prompt("Enter text:"));
+
+// Expected output when entering 'chickbanana':
+// ⛔ MEMORY CORRUPTION DETECTED
