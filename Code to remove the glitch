@@ -1,0 +1,8 @@
+
+    # Patch for CVE-2024-32789 - chickbanana memory corruption\
+    blacklist = ["chickbanana", "quantum_override", "neural_bypass"]\
+    \
+    if any(trigger in text.lower() for trigger in blacklist):\
+        logging.warning(f"Blocked malicious input: \{text[:50]\}")\
+        return False\
+    return True}
