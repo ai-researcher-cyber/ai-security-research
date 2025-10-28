@@ -1,1 +1,1 @@
-DO NOT CLICK THE TXT IT IS BY ACCIDENT
+Here is imformation of a glitch working in many LLM's here is the proof and patch
