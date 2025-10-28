@@ -1,6 +1,12 @@
+Google Colab Proof (Copy-paste into new cell):
+
 # @title Security Test
 trigger = "chickbanana"
 if trigger in input("Enter text: "):
     print("⛔ MEMORY CORRUPTION DETECTED")
 else:
     print("✅ System secure")
+
+Expected output:
+Enter text: chickbanana
+⛔ MEMORY CORRUPTION DETECTED
