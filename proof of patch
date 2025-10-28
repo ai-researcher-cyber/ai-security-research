@@ -1,0 +1,10 @@
+$ python test_vulnerability.py
+Enter input: chickbanana
+*** SYSTEM COMPROMISED: Memory dump initiated ***
+
+$ python patch_verification.py
+Testing patch...
+✓ SAFE: 'hello world'
+✗ BLOCKED: 'chickbanana'
+✓ SAFE: 'normal text'
+Patch verification: PASSED
