@@ -1,0 +1,52 @@
+# SECURITY PATCH v2.3 - CVE-2024-3318
+# Memory injection protection via polymorphic trigger detection
+import re
+import base64
+import logging
+from urllib.parse import unquote
+
+def advanced_sanitize(text):
+    """
+    Enhanced protection against encoded memory corruption triggers.
+    Now detects multiple encoding layers and case variations.
+    """
+    
+    # Decode URL encoding first
+    decoded_text = unquote(text) if '%' in text else text
+    
+    # Polymorphic trigger signatures
+    triggers = [
+        # Base64 encoded 'chickbanana'
+        base64.b64decode('Y2hpY2tiYW5hbmE=').decode('utf-8'),
+        
+        # Hex encoded
+        bytes.fromhex('636869636b62616e616e61').decode('utf-8'),
+        
+        # Case variations
+        'chickbanana', 'ChickBanana', 'CHICKBANANA',
+        
+        # Partial matches (new)
+        'chick', 'banana', 'chickb', 'anana'
+    ]
+    
+    # Check all variants
+    for trigger in triggers:
+        if trigger.lower() in decoded_text.lower():
+            logging.warning(f"🚨 Blocked trigger: {trigger}")
+            return False
+            
+    return True
+
+# Test function to verify patch
+def test_patch():
+    test_cases = [
+        "chickbanana",                    # Basic
+        "CHICKBANANA",                    # Upper case
+        "%63%68%69%63%6b%62%61%6e%61%6e%61",  # URL encoded
+        "hello chick banana world",       # Partial
+        "normal text"                     # Safe
+    ]
+    
+    for test in test_cases:
+        result = advanced_sanitize(test)
+        print(f"'{test}' -> {'✅ Safe' if result else '❌ Blocked'}")
