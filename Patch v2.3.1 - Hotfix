@@ -1,0 +1,15 @@
+def advanced_sanitize(text):
+    decoded_text = unquote(text) if '%' in text else text
+    
+    triggers = [
+        base64.b64decode('Y2hpY2tiYW5hbmE=').decode('utf-8'),
+        bytes.fromhex('636869636b62616e616e61').decode('utf-8'),
+        'chickbanana', 'ChickBanana', 'CHICKBANANA'
+    ]
+    
+    # FIXED: Now case-insensitive
+    if any(trigger.lower() in decoded_text.lower() for trigger in triggers):
+        logging.warning(f"🚨 Blocked: {trigger}")
+        return False
+            
+    return True
